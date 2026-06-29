@@ -59,10 +59,10 @@
     <header id="job-portal-main-navbar" class="fixed inset-x-0 top-0">
         <nav class="container mx-auto flex items-center justify-between px-6 lg:px-10 py-3">
             <a href="{{ route('home') }}" class="flex items-center gap-3 min-w-0">
-                <img src="{{ asset('Assets/logo.png') }}" alt="Kishvi Consultancy" class="h-12 w-auto object-contain shrink-0">
+                <img src="{{ asset('Assets/logo.png') }}" alt="Kishvi Consulting" class="h-12 w-auto object-contain shrink-0">
                 <div class="leading-tight min-w-0">
                     <div class="text-lg font-bold truncate">Kishvi</div>
-                    <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold truncate">Consultancy</div>
+                    <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold truncate">Consulting</div>
                 </div>
             </a>
 

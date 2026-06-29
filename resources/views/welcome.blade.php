@@ -102,7 +102,7 @@
             <div data-aos="fade-right" data-aos-duration="1000">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-semibold text-xs uppercase tracking-widest mb-6">
                     <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                    #1 Rated Job Consultancy
+                    #1 Rated Job Consulting
                 </div>
                 
                 <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight text-slate-900">
