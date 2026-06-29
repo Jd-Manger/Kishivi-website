@@ -1,0 +1,200 @@
+:root {
+    --premium-primary: #2563eb;
+    --premium-primary-dark: #1d4ed8;
+    --premium-accent: #7c3aed;
+    --premium-text: #0f172a;
+    --premium-muted: #475569;
+    --premium-surface: #ffffff;
+    --premium-surface-soft: #f8fbff;
+    --premium-border: rgba(37, 99, 235, 0.12);
+    --premium-glow: 0 18px 45px -25px rgba(37, 99, 235, 0.48);
+    --premium-radius: 18px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--premium-text);
+    background:
+        radial-gradient(circle at 8% 8%, rgba(37, 99, 235, 0.08), transparent 42%),
+        radial-gradient(circle at 92% 0%, rgba(124, 58, 237, 0.08), transparent 40%),
+        linear-gradient(180deg, #f8fbff 0%, #f5f8ff 45%, #f7fafc 100%);
+}
+
+section {
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--premium-text);
+    letter-spacing: -0.02em;
+}
+
+p, li, .text-secondary, .text-slate-600, .text-slate-500 {
+    color: var(--premium-muted) !important;
+}
+
+#job-portal-main-navbar {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 20px 44px -34px rgba(15, 23, 42, 0.4);
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.95), rgba(248, 251, 255, 0.88));
+}
+
+#job-portal-main-navbar.job-portal-scrolled {
+    box-shadow: 0 20px 42px -28px rgba(37, 99, 235, 0.35) !important;
+}
+
+.job-portal-desktop-links a,
+.job-portal-mobile-link {
+    transition: all 0.25s ease;
+}
+
+.job-portal-desktop-links a:hover,
+.job-portal-mobile-link:hover {
+    color: var(--premium-primary) !important;
+}
+
+.card,
+.contact-card,
+.industry-card,
+.value-card,
+.accordion-item,
+.shadow-sm,
+.shadow {
+    border: 1px solid var(--premium-border) !important;
+    border-radius: var(--premium-radius) !important;
+    box-shadow: 0 16px 34px -28px rgba(15, 23, 42, 0.45) !important;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.card:hover,
+.contact-card:hover,
+.industry-card:hover,
+.value-card:hover,
+.accordion-item:hover,
+.shadow-sm:hover,
+.shadow:hover {
+    transform: translateY(-5px);
+    border-color: rgba(37, 99, 235, 0.28) !important;
+    box-shadow: 0 24px 45px -28px rgba(37, 99, 235, 0.42) !important;
+}
+
+.hero-img-1,
+.hero-img-2,
+.hero-img-3,
+.img-card,
+.hero-collage img {
+    box-shadow: 0 22px 50px -30px rgba(2, 6, 23, 0.55) !important;
+}
+
+.btn,
+button,
+[role='button'] {
+    border-radius: 12px !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover,
+button:hover,
+[role='button']:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--premium-glow);
+}
+
+.btn-primary,
+.bg-primary {
+    background: linear-gradient(135deg, var(--premium-primary), var(--premium-accent)) !important;
+    border-color: transparent !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(135deg, var(--premium-primary-dark), #6d28d9) !important;
+}
+
+.form-control,
+.form-select,
+input,
+textarea,
+select {
+    border-radius: 12px !important;
+    border: 1px solid rgba(148, 163, 184, 0.42) !important;
+    background: #fff !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: rgba(37, 99, 235, 0.5) !important;
+    box-shadow: 0 0 0 0.22rem rgba(37, 99, 235, 0.16) !important;
+}
+
+#footer-container {
+    background: #1e293b !important;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+#footer-container .footer-link,
+#footer-container p,
+#footer-container span,
+#footer-container li {
+    color: rgba(226, 232, 240, 0.84) !important;
+}
+
+#footer-container .footer-link:hover {
+    color: #ffffff !important;
+}
+
+.social-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--premium-primary), var(--premium-accent));
+    border-radius: 99px;
+}
+
+@media (max-width: 768px) {
+    body {
+        background:
+            radial-gradient(circle at 20% 0%, rgba(37, 99, 235, 0.08), transparent 55%),
+            linear-gradient(180deg, #f8fbff 0%, #f7fafc 100%);
+    }
+
+    .card,
+    .contact-card,
+    .industry-card,
+    .value-card,
+    .accordion-item,
+    .shadow-sm,
+    .shadow {
+        border-radius: 14px !important;
+    }
+}

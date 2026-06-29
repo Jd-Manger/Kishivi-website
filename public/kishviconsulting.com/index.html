@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishvi consulting</title>
+</head>
+<body>
+    
+<!-- ===== JOB PORTAL NAVBAR PARTIAL START ===== -->
+<!-- Load required external libs (will be harmless if already loaded) -->
+<!-- Tailwind (CDN) -->
+<script>
+    // Only inject tailwind script tag once per page
+    if (!document.currentScript || !document.currentScript.hasAttribute('data-job-portal-tailwind')) {
+        (function(){
+            if (!document.querySelector('script[data-job-portal-tailwind]')) {
+                var s = document.createElement('script');
+                s.src = "https://cdn.tailwindcss.com";
+                s.setAttribute('data-job-portal-tailwind','1');
+                document.head.appendChild(s);
+            }
+        })();
+    }
+</script>
+
+<!-- Lucide icons -->
+<script>
+    if (!document.querySelector('script[data-job-portal-lucide]')) {
+        var s2 = document.createElement('script');
+        s2.src = "https://unpkg.com/lucide@latest";
+        s2.setAttribute('data-job-portal-lucide','1');
+        document.head.appendChild(s2);
+    }
+</script>
+
+<!-- AOS (optional animation library) -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" media="all">
+<script>
+    if (!document.querySelector('script[data-job-portal-aos]')) {
+        var s3 = document.createElement('script');
+        s3.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+        s3.setAttribute('data-job-portal-aos','1');
+        document.head.appendChild(s3);
+    }
+</script>
+
+<style>
+/* Scoped styles using unique prefix to avoid conflicts */
+:root { --job-accent: #2563eb; --job-muted: #94a3b8; }
+#job-portal-navbar-container { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+#job-portal-navbar-container *, #job-portal-navbar-container *::before, #job-portal-navbar-container *::after { box-sizing: border-box; }
+
+/* Force no horizontal scroll globally (safe minimal) */
+html, body { overflow-x: hidden !important; }
+
+/* Navbar base */
+#job-portal-main-navbar {
+    transition: all .36s cubic-bezier(.2,.9,.2,1);
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.82));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(15,23,42,0.04);
+    padding: .9rem 1.25rem;
+    position: relative;
+}
+
+/* Scrolled state */
+#job-portal-main-navbar.job-portal-scrolled {
+    background: #fff !important;
+    box-shadow: 0 8px 26px -12px rgba(2,6,23,0.08);
+}
+
+/* Desktop links (kept simple so tailwind classes still apply) */
+.job-portal-desktop-links a { position: relative; display: inline-block; padding: .25rem .25rem; }
+.job-portal-desktop-links a::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: -6px;
+    width: 0;
+    height: 3px;
+    background: var(--job-accent);
+    border-radius: 99px;
+    transition: width .28s ease;
+}
+.job-portal-desktop-links a:hover::after, .job-portal-desktop-links a.job-portal-active::after { width: 80%; }
+
+/* Mobile overlay styles (left slide-in panel) */
+#job-portal-mobile-overlay { position: fixed; inset: 0; z-index: 9999; display: none; pointer-events: none; }
+#job-portal-mobile-backdrop {
+    position: absolute; inset:0; background: rgba(2,6,23,0.46); opacity:0; transition: opacity .28s ease;
+}
+#job-portal-mobile-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 92%;
+    max-width: 420px;
+    background: linear-gradient(180deg,#ffffff,#fbfdff);
+    transform: translateX(-110%);
+    transition: transform .36s cubic-bezier(.2,.9,.2,1);
+    border-radius: 0 16px 16px 0;
+    box-shadow: 0 22px 48px rgba(2,6,23,0.12);
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+}
+
+/* open state */
+#job-portal-mobile-overlay.job-portal-open { display: block; pointer-events: auto; }
+#job-portal-mobile-overlay.job-portal-open #job-portal-mobile-backdrop { opacity: 1; }
+#job-portal-mobile-overlay.job-portal-open #job-portal-mobile-panel { transform: translateX(0); }
+
+/* Mobile link style */
+.job-portal-mobile-link { display:flex; gap:12px; align-items:center; padding:14px; border-radius:12px; font-weight:600; color:#0f172a; text-decoration:none; transition: background .14s ease, transform .1s ease; }
+.job-portal-mobile-link:hover { background: rgba(37,99,235,0.06); transform: translateX(4px); }
+.job-portal-mobile-link.job-portal-active { background: rgba(37,99,235,0.08); color: var(--job-accent); }
+
+/* bottom area */
+.job-portal-mobile-bottom { margin-top: auto; padding: 14px; border-top: 1px solid rgba(15,23,42,0.03); }
+
+/* small responsive safety */
+@media (min-width: 1024px) {
+    #job-portal-mobile-overlay { display: none !important; }
+}
+</style>
+
+<!-- NAV HTML -->
+<div id="job-portal-navbar-container">
+
+   <header id="job-portal-main-navbar" class="fixed inset-x-0 top-0 z-50">
+    <nav class="flex items-center justify-between max-w-7xl mx-auto px-4 lg:px-8">
+        <!-- LOGO -->
+        <a href="/" class="flex items-center gap-3">
+            <!-- Updated Logo Image -->
+            <img src="Assets/logo.png" alt="Kishvi Consultancy" class="h-12 w-auto object-contain">
+            
+            <div class="leading-tight">
+                <div class="text-lg font-bold">Kishvi </div>
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Consultancy</div>
+            </div>
+        </a>
+
+        <!-- DESKTOP LINKS -->
+        <div class="hidden lg:flex items-center gap-8 job-portal-desktop-links">
+                            <a href="index" class="job-portal-active text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                    Home                </a>
+                            <a href="about" class=" text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                    About Us                </a>
+                            <a href="industries" class=" text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                    Industries                </a>
+                            <a href="contact" class=" text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+                    Contact                </a>
+                    </div>
+
+        <!-- DESKTOP ACTIONS -->
+        <div class="hidden lg:flex items-center gap-4">
+            <a href="/browse-jobs" class="text-sm font-bold text-slate-500 hover:text-blue-600">Log In</a>
+            <a href="#" class="px-5 py-2.5 bg-slate-900 hover:bg-blue-600 text-white text-sm font-bold rounded-full shadow-lg">
+                Post a Job
+            </a>
+        </div>
+
+        <!-- MOBILE HAMBURGER -->
+        <div class="lg:hidden flex items-center">
+            <button id="job-portal-hamburger-btn" aria-controls="job-portal-mobile-panel" aria-expanded="false" class="p-2.5 rounded-full hover:bg-slate-100 focus:outline-none">
+                <i data-lucide="menu" class="w-7 h-7 text-slate-800"></i>
+            </button>
+        </div>
+    </nav>
+</header>
+
+    <!-- MOBILE OVERLAY -->
+    <div id="job-portal-mobile-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div id="job-portal-mobile-backdrop" tabindex="-1"></div>
+
+        <aside id="job-portal-mobile-panel" role="menu" aria-label="Mobile menu panel" class="p-5">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg">
+                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-lg font-bold">JobPortal</div>
+                        <div class="text-xs text-slate-400">Consultancy</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button id="job-portal-close-btn" aria-label="Close menu" class="p-2 rounded-full hover:bg-slate-100 focus:outline-none">
+                        <i data-lucide="x" class="w-6 h-6 text-red-500"></i>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="flex flex-col gap-2 mt-2">
+                                    <a href="index" class="job-portal-mobile-link job-portal-active" role="menuitem" tabindex="0">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                        <span>Home</span>
+                    </a>
+                                    <a href="about" class="job-portal-mobile-link " role="menuitem" tabindex="0">
+                        <i data-lucide="user" class="w-5 h-5"></i>
+                        <span>About Us</span>
+                    </a>
+                                    <a href="industries" class="job-portal-mobile-link " role="menuitem" tabindex="0">
+                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                        <span>Industries</span>
+                    </a>
+                                    <a href="contact" class="job-portal-mobile-link " role="menuitem" tabindex="0">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        <span>Contact</span>
+                    </a>
+                            </nav>
+
+            <div class="job-portal-mobile-bottom">
+                <a href="#" class="block w-full text-center py-3 rounded-xl font-bold bg-blue-600 text-white shadow mb-3">
+                    <i data-lucide="plus-circle" class="w-4 h-4 inline-block mr-2"></i> Post a Job
+                </a>
+                <a href="/browse-jobs" class="block w-full text-center py-3 rounded-xl font-bold border border-slate-100 text-slate-700">
+                    Log In to Account
+                </a>
+            </div>
+        </aside>
+    </div>
+
+</div>
+<!-- ===== JOB PORTAL NAVBAR PARTIAL END ===== -->
+
+<script>
+(function(){
+    // Safety: do not re-run init multiple times
+    if (window.__jobPortalNavbarInitialized) return;
+    window.__jobPortalNavbarInitialized = true;
+
+    // Wait for DOM ready (if included mid-page)
+    function domReady(cb){
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', cb);
+        else cb();
+    }
+
+    domReady(function(){
+        // Initialize lucide icons if available or wait until loaded
+        function initLucide() {
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            } else {
+                // If script not loaded yet, try again shortly (max attempts)
+                var tries = 0;
+                var iv = setInterval(function(){
+                    tries++;
+                    if (window.lucide && typeof lucide.createIcons === 'function') {
+                        clearInterval(iv);
+                        lucide.createIcons();
+                    } else if (tries > 20) { clearInterval(iv); }
+                }, 150);
+            }
+        }
+        initLucide();
+
+        // Init AOS if present
+        if (window.AOS && typeof AOS.init === 'function') {
+            AOS.init({ once: true, duration: 560 });
+        } else {
+            var triesA = 0;
+            var iv2 = setInterval(function(){
+                triesA++;
+                if (window.AOS && typeof AOS.init === 'function') {
+                    clearInterval(iv2);
+                    AOS.init({ once: true, duration: 560 });
+                } else if (triesA > 20) { clearInterval(iv2); }
+            }, 200);
+        }
+
+        // Elements
+        var openBtn = document.getElementById('job-portal-hamburger-btn');
+        var closeBtn = document.getElementById('job-portal-close-btn');
+        var overlay = document.getElementById('job-portal-mobile-overlay');
+        var backdrop = document.getElementById('job-portal-mobile-backdrop');
+        var panel = document.getElementById('job-portal-mobile-panel');
+        var body = document.body;
+        var navbar = document.getElementById('job-portal-main-navbar');
+
+        function openMenu(){
+            if (!overlay) return;
+            overlay.classList.add('job-portal-open');
+            overlay.setAttribute('aria-hidden','false');
+            if (openBtn) openBtn.setAttribute('aria-expanded','true');
+            body.style.overflow = 'hidden';
+            // focus first element in panel
+            setTimeout(function(){
+                var f = panel && panel.querySelector('a,button, [tabindex]:not([tabindex="-1"])');
+                if (f) f.focus();
+            },120);
+        }
+
+        function closeMenu(){
+            if (!overlay) return;
+            overlay.classList.remove('job-portal-open');
+            overlay.setAttribute('aria-hidden','true');
+            if (openBtn) openBtn.setAttribute('aria-expanded','false');
+            body.style.overflow = '';
+            if (openBtn) openBtn.focus();
+        }
+
+        // Attach events with safety checks
+        if (openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openMenu(); });
+        if (closeBtn) closeBtn.addEventListener('click', function(e){ e.preventDefault(); closeMenu(); });
+        if (backdrop) backdrop.addEventListener('click', function(){ closeMenu(); });
+
+        // Close when a menu link is clicked (use capture to include dynamic nav)
+        if (panel) {
+            panel.addEventListener('click', function(evt){
+                var t = evt.target;
+                // find nearest anchor (for clicks on inner spans/icons)
+                while (t && t !== panel) {
+                    if (t.tagName && t.tagName.toLowerCase() === 'a') {
+                        // small delay so navigation can start
+                        setTimeout(closeMenu, 120);
+                        return;
+                    }
+                    t = t.parentNode;
+                }
+            });
+        }
+
+        // ESC to close
+        document.addEventListener('keydown', function(e){
+            if ((e.key === 'Escape' || e.key === 'Esc') && overlay && overlay.classList.contains('job-portal-open')) {
+                closeMenu();
+            }
+        });
+
+        // Navbar scrolled class
+        function handleScroll(){
+            if (!navbar) return;
+            if (window.scrollY > 8) navbar.classList.add('job-portal-scrolled');
+            else navbar.classList.remove('job-portal-scrolled');
+        }
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+
+        // Defensive: ensure overlay attributes set
+        if (overlay) overlay.setAttribute('aria-hidden','true');
+
+    }); // dom ready
+})();
+</script>
+    <!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishvi Consulting | Bridging Talent & Opportunity</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Gradient Text Utility */
+        .text-gradient {
+            background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-light {
+            background: linear-gradient(135deg, #60a5fa 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Abstract Blob Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Collage Styles */
+        .collage-img {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .collage-img:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 50;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-800">
+
+    
+    <!-- 2. HERO SECTION -->
+    <section class="relative min-h-screen flex items-center pt-0 overflow-hidden bg-white">
+        <!-- Background Decor -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-50/50 rounded-bl-[100px] -z-10"></div>
+        <div class="absolute top-40 left-20 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl -z-10 animate-float"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl -z-10"></div>
+
+        <div class="container mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Hero Text -->
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-semibold text-xs uppercase tracking-widest mb-6">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    #1 Rated Job Consultancy
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight text-slate-900">
+                    Your Potential, <br>
+                    <span class="text-blue-600">Our Mission.</span>
+                </h1>
+                
+                <p class="text-lg text-slate-500 mb-8 leading-relaxed max-w-lg">
+                    At <span class="font-bold text-slate-800">Kishvi Consulting</span>, we believe everyone deserves a chance to grow. From freshers to executives, and blue-collar to white-collar, we bridge the gap between talent and opportunity.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                        Find a Job <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="/contact" class="px-8 py-4 bg-white border border-slate-200 hover:border-blue-300 text-slate-700 hover:text-blue-600 font-bold rounded-xl shadow-sm hover:shadow-md transition-all flex items-center gap-2">
+                        Hiring? Click Here
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="mt-12 flex items-center gap-6 text-slate-400 text-sm font-medium">
+                    <div class="flex -space-x-3">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-xs">+2k</div>
+                    </div>
+                    <p>Happy Candidates Placed This Month</p>
+                </div>
+            </div>
+
+            <!-- Hero Image / Visual -->
+            <div class="relative" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="relative z-10 bg-slate-900 rounded-3xl p-2 shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <!-- Placeholder for a high quality professional image -->
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Professional Woman" 
+                         class="rounded-2xl w-full h-[500px] object-cover opacity-90">
+                    
+                    <!-- Floating Card 1 -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl flex items-center gap-4 animate-float">
+                        <div class="bg-green-100 p-3 rounded-full text-green-600">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase font-bold">Success Rate</p>
+                            <p class="text-xl font-bold text-slate-900">98.5%</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Card 2 -->
+                    <div class="absolute top-10 -right-8 bg-white p-4 rounded-xl shadow-xl max-w-[180px]">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-xs font-bold text-slate-600">New Offer</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-800">Senior Developer @ TechCorp</p>
+                        <p class="text-xs text-blue-600 font-bold mt-1">$120k / Year</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TRUST BANNER -->
+    <section class="py-10 border-y border-slate-100 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm text-slate-400 font-semibold uppercase tracking-widest mb-6">Trusted by leading companies</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Simple SVG Placeholders for logos -->
+                <i data-lucide="hexagon" class="w-10 h-10"></i>
+                <i data-lucide="triangle" class="w-10 h-10"></i>
+                <i data-lucide="circle" class="w-10 h-10"></i>
+                <i data-lucide="square" class="w-10 h-10"></i>
+                <i data-lucide="star" class="w-10 h-10"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ABOUT US (COLLAGE ALBUM DESIGN) -->
+    <section id="about" class="py-24 bg-slate-50 relative overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Collage Images (Left) -->
+                <div class="relative h-[600px] w-full hidden lg:block" data-aos="zoom-in" data-aos-duration="1000">
+                    <!-- Image 1: Background Layer -->
+                    <div class="absolute top-0 left-10 w-64 h-80 bg-blue-600 rounded-2xl rotate-[-6deg] opacity-20 z-0"></div>
+                    
+                    <!-- Image 2: Main Portrait -->
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" 
+                         alt="CEO" 
+                         class="collage-img absolute top-4 left-4 w-72 h-96 object-cover rounded-2xl shadow-2xl rotate-[-3deg] border-4 border-white z-10">
+                    
+                    <!-- Image 3: Landscape Action Shot -->
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" 
+                         alt="Team Meeting" 
+                         class="collage-img absolute bottom-10 right-4 w-80 h-64 object-cover rounded-2xl shadow-2xl rotate-[3deg] border-4 border-white z-20">
+                    
+                    <!-- Image 4: Small Detail -->
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=400&auto=format&fit=crop" 
+                         alt="Handshake" 
+                         class="collage-img absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 object-cover rounded-full shadow-2xl border-4 border-slate-900 z-30">
+                </div>
+
+                <!-- Content (Right) -->
+                <div data-aos="fade-left" data-aos-duration="1000">
+                    <h4 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-2">About Kishvi Consulting</h4>
+                    <h2 class="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        More Than Just a Job Portal. <br>
+                        We Build <span class="text-blue-600">Livelihoods.</span>
+                    </h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Established with a vision to eradicate unemployment, <span class="font-bold text-slate-800">Kishvi consulting</span> is not just about corporate placements. We are a holistic platform dedicated to providing employment to the needy, the skilled, and the ambitious alike.
+                    </p>
+                    <p class="text-slate-600 mb-8 leading-relaxed">
+                        Whether you are a daily wage worker looking for stability, a fresh graduate seeking direction, or a senior executive aiming for the C-Suite, our algorithms and human-touch consultancy ensure you find the right fit.
+                    </p>
+
+                    <!-- Features List -->
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-900">Inclusive Hiring</h5>
+                                <p class="text-sm text-slate-500">Jobs for blue-collar, grey-collar, and white-collar workers.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-900">Career Growth</h5>
+                                <p class="text-sm text-slate-500">Free counseling and skill development workshops.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="text-blue-600 font-bold hover:underline flex items-center gap-2">
+                        Read Our Full Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CATEGORIES (BENTO GRID STYLE) -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Opportunities Across All Sectors</h2>
+                <p class="text-slate-500">We don't limit talent. Browse jobs by category designed to fit every skill level.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Large Card -->
+                <div class="md:col-span-2 md:row-span-2 relative group rounded-3xl overflow-hidden shadow-lg cursor-pointer" data-aos="fade-up" data-aos-delay="0">
+                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Corporate">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent p-8 flex flex-col justify-end">
+                        <i data-lucide="briefcase" class="text-white w-8 h-8 mb-3"></i>
+                        <h3 class="text-2xl font-bold text-white mb-1">Corporate & IT</h3>
+                        <p class="text-slate-300 text-sm">Developers, Managers, HR, Finance</p>
+                    </div>
+                </div>
+
+                <!-- Regular Card -->
+                <div class="relative group rounded-3xl overflow-hidden shadow-lg bg-blue-600 p-8 flex flex-col justify-between h-64" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                        <i data-lucide="stethoscope" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-1">Medical</h3>
+                        <p class="text-blue-100 text-sm">Nurses, Doctors, Lab Techs</p>
+                    </div>
+                    <i data-lucide="arrow-up-right" class="absolute top-6 right-6 text-white/50 w-6 h-6 group-hover:text-white transition-colors"></i>
+                </div>
+
+                <!-- Regular Card -->
+                <div class="relative group rounded-3xl overflow-hidden shadow-lg bg-slate-900 p-8 flex flex-col justify-between h-64" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
+                        <i data-lucide="hammer" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-1">Skilled Labor</h3>
+                        <p class="text-slate-400 text-sm">Electricians, Plumbers, Mechanics</p>
+                    </div>
+                </div>
+
+                <!-- Wide Card -->
+                <div class="md:col-span-2 relative group rounded-3xl overflow-hidden shadow-lg bg-white border border-slate-100 p-8 flex items-center gap-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 shrink-0">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Fresher & Internships</h3>
+                        <p class="text-slate-500 text-sm mt-1">Start your journey with top mentorship programs.</p>
+                    </div>
+                    <button class="ml-auto w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. HOW IT WORKS (TIMELINE) -->
+    <section class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Background Gradients -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20">
+             <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]"></div>
+             <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-500 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-10 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl lg:text-4xl font-extrabold mb-4">Simple Process, Fast Results</h2>
+                <p class="text-slate-400">Get hired in 4 easy steps.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-slate-700 -z-10"></div>
+
+                <!-- Step 1 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-24 h-24 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center mb-6 shadow-xl relative group">
+                        <i data-lucide="file-text" class="w-10 h-10 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Create Profile</h3>
+                    <p class="text-sm text-slate-400 px-4">Upload your resume and details.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-24 h-24 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center mb-6 shadow-xl relative group">
+                        <i data-lucide="search" class="w-10 h-10 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Search Jobs</h3>
+                    <p class="text-sm text-slate-400 px-4">Filter by location and salary.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-24 h-24 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center mb-6 shadow-xl relative group">
+                        <i data-lucide="video" class="w-10 h-10 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Interview</h3>
+                    <p class="text-sm text-slate-400 px-4">Connect with employers directly.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-24 h-24 mx-auto bg-slate-800 border-4 border-slate-700 rounded-full flex items-center justify-center mb-6 shadow-xl relative group">
+                        <i data-lucide="check-circle" class="w-10 h-10 text-green-400 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Get Hired</h3>
+                    <p class="text-sm text-slate-400 px-4">Start your new career path.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- 8. WHY CHOOSE KISHVI -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-4xl font-extrabold text-slate-900 mb-6">Why Candidates & Employers <br>Trust <span class="text-blue-600">Kishvi.</span></h2>
+                    <p class="text-slate-600 mb-8 text-lg">We use advanced AI matching combined with empathetic human verification to ensure every placement is a step towards a better future.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900">Verified Listings</h4>
+                                <p class="text-slate-500">Zero scams. Every employer is vetted personally by our team.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="zap" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900">Fast Hiring</h4>
+                                <p class="text-slate-500">Our average time-to-hire is 40% faster than industry standards.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900">Support for the Needy</h4>
+                                <p class="text-slate-500">Special priority placement programs for underprivileged candidates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative" data-aos="zoom-in">
+                    <div class="absolute inset-0 bg-blue-600 rounded-3xl rotate-6 opacity-10"></div>
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=800&auto=format&fit=crop" 
+                         alt="Team Success" 
+                         class="relative rounded-3xl shadow-2xl w-full">
+                    
+                    <!-- Stats Overlay -->
+                    <div class="absolute bottom-10 left-[-20px] bg-white p-6 rounded-2xl shadow-xl max-w-xs border-l-4 border-blue-600 hidden md:block">
+                        <p class="text-slate-500 text-sm mb-2">We have helped</p>
+                        <h3 class="text-3xl font-extrabold text-slate-900 mb-1">10,000+</h3>
+                        <p class="text-slate-800 font-bold">Families secure a livelihood.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. CTA SECTION -->
+    <section class="py-20">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="bg-blue-600 rounded-[2.5rem] p-10 md:p-16 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-600/40">
+                <!-- Background Pattern -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                    </svg>
+                </div>
+
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6">Ready to Shape Your Future?</h2>
+                    <p class="text-blue-100 text-lg mb-10">Join Kishvi Consulting today. Whether you are hiring top talent or looking for your next big break, we are your partner in success.</p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/browse-jobs" class="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-slate-50 transition-all">
+                            Create Free Account
+                        </a>
+                        <a href="/contact" class="px-8 py-4 bg-blue-700 border border-blue-500 text-white font-bold rounded-xl hover:bg-blue-800 transition-all">
+                            Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Initialize Animations -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+        
+        // Re-initialize icons just in case
+        lucide.createIcons();
+    </script>
+</body>
+</html>    <!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Kishvi Consulting</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* --- CUSTOM UTILITIES --- */
+        
+        /* Smooth Text Reveal */
+        .reveal-text {
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+            background-image: linear-gradient(to right, #2563eb 0%, #0f172a 50%, #2563eb 100%);
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Card Hover Lift & Glow */
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hover-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -5px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Timeline Dot Pulse */
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: inherit;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        /* Zig-Zag Background */
+        .bg-zigzag {
+            background-color: #0f172a;
+            background-image:  linear-gradient(135deg, #1e293b 25%, transparent 25%), linear-gradient(225deg, #1e293b 25%, transparent 25%), linear-gradient(45deg, #1e293b 25%, transparent 25%), linear-gradient(315deg, #1e293b 25%, #0f172a 25%);
+            background-position:  40px 0, 40px 0, 0 0, 0 0;
+            background-size: 80px 80px;
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-700">
+
+    <!-- 1. NAVBAR INCLUDE -->
+
+    <!-- 2. HERO: MINIMALIST TYPOGRAPHY -->
+    <section class="relative pt-0 pb-20 bg-white overflow-hidden">
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50 rounded-full blur-3xl -z-10 translate-x-1/3 -translate-y-1/4"></div>
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="max-w-4xl">
+                <h4 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4" data-aos="fade-right">Since 2015</h4>
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-8" data-aos="fade-up" data-aos-delay="100">
+                    We don't just fill positions. <br>
+                    <span class="reveal-text">We fulfill potential.</span>
+                </h1>
+                <p class="text-xl text-slate-500 leading-relaxed max-w-2xl" data-aos="fade-up" data-aos-delay="200">
+                    Kishvi Consulting stands at the intersection of <strong>Compassion</strong> and <strong>Corporate Excellence</strong>. We are a new-age recruitment firm dedicated to uplifting the needy while serving the elite.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. OUR PHILOSOPHY (SPLIT LAYOUT) -->
+    <section class="py-24 bg-slate-50 relative">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Image Stack -->
+                <div class="relative h-[500px]" data-aos="zoom-in-right">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop" class="absolute top-0 left-0 w-3/4 h-3/4 object-cover rounded-tr-[4rem] rounded-bl-[4rem] shadow-2xl z-10" alt="Meeting">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop" class="absolute bottom-0 right-0 w-3/5 h-3/5 object-cover rounded-tl-[4rem] rounded-br-[4rem] shadow-2xl border-8 border-slate-50 z-20 grayscale hover:grayscale-0 transition-all duration-500" alt="Handshake">
+                </div>
+
+                <!-- Text Content -->
+                <div data-aos="fade-left">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">The <span class="text-blue-600">Kishvi</span> Difference</h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-5">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="target" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 mb-2">Precision Matching</h4>
+                                <p class="text-slate-500">We move beyond keywords. Our consultants analyze culture fit, soft skills, and long-term career goals.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="heart" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 mb-2">Social Responsibility</h4>
+                                <p class="text-slate-500">A portion of our profits goes into training underprivileged candidates, making them job-ready for free.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="w-12 h-12 bg-white rounded-xl shadow-md flex items-center justify-center text-blue-600 shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 mb-2">Rapid Turnaround</h4>
+                                <p class="text-slate-500">Positions closed in record time. From interview to offer letter in as little as 72 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. STATS STRIP (DARK THEME) -->
+    <section class="py-16 bg-zigzag text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-slate-900/90"></div>
+        <div class="container mx-auto px-6 lg:px-10 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div data-aos="fade-up" data-aos-delay="0">
+                    <p class="text-4xl md:text-5xl font-bold text-blue-400 mb-2">8+</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-widest">Years Experience</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-4xl md:text-5xl font-bold text-blue-400 mb-2">15k+</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-widest">Lives Impacted</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <p class="text-4xl md:text-5xl font-bold text-blue-400 mb-2">500+</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-widest">Corporate Partners</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <p class="text-4xl md:text-5xl font-bold text-blue-400 mb-2">25</p>
+                    <p class="text-slate-400 text-sm uppercase tracking-widest">Cities Covered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. COMPREHENSIVE SERVICES (CARD GRID) -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Our Services</h2>
+                <p class="text-slate-500">Tailored solutions for every hiring need. From the factory floor to the corner office.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="briefcase" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Executive Search</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Finding leaders for the C-Suite. We specialize in headhunting top-tier VPs, Directors, and CEOs using confidential channels.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Salary > ₹20 LPA</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Confidential Hiring</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="users" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Bulk Hiring / RPO</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Need 100+ employees fast? Our RPO (Recruitment Process Outsourcing) model handles end-to-end selection.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> BPOs & Call Centers</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Rapid Scaling</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="hard-hat" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Blue-Collar Staffing</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">We connect skilled labor with industries. Helping the needy find stable income is our core mission.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Factory Workers</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Drivers & Security</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="monitor" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">IT Specialist Hiring</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Tech recruitment by tech experts. We screen for coding skills, stack proficiency, and project experience.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Full Stack Devs</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Data Scientists</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="graduation-cap" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Campus Placements</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Bridging colleges and corporates. We organize job fairs and drive campus recruitment across India.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Freshers Hiring</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Internship Drives</li>
+                    </ul>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="hover-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-all group-hover:bg-blue-600"></div>
+                    <i data-lucide="file-search" class="w-10 h-10 text-blue-600 mb-6 relative z-10 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Resume & Training</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Value-added services for candidates. We polish your CV and prepare you for the toughest interviews.</p>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> CV Writing</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Mock Interviews</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. THE PROCESS (VERTICAL TIMELINE) -->
+    <section class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6 lg:px-10">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">How We Work</h2>
+            
+            <div class="relative max-w-3xl mx-auto">
+                <!-- Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 h-full w-0.5 bg-blue-200 transform md:-translate-x-1/2"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-12 w-full" data-aos="fade-up">
+                    <div class="md:w-5/12 order-2 md:order-1 bg-white p-6 rounded-xl shadow-sm border border-slate-100 md:text-right">
+                        <h4 class="font-bold text-slate-900 text-lg">Requirement Analysis</h4>
+                        <p class="text-slate-500 text-sm mt-2">We sit down with you to understand not just the job description, but the company culture and long-term goals.</p>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-lg timeline-dot transform -translate-x-1/2 z-10"></div>
+                    <div class="md:w-5/12 order-3 md:order-3"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-12 w-full" data-aos="fade-up">
+                    <div class="md:w-5/12 order-2 md:order-1"></div>
+                    <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-lg timeline-dot transform -translate-x-1/2 z-10"></div>
+                    <div class="md:w-5/12 order-2 md:order-3 bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-left">
+                        <h4 class="font-bold text-slate-900 text-lg">Sourcing & Vetting</h4>
+                        <p class="text-slate-500 text-sm mt-2">Using our database of 50,000+ candidates, we filter, interview, and verify skills before you even see a resume.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-12 w-full" data-aos="fade-up">
+                    <div class="md:w-5/12 order-2 md:order-1 bg-white p-6 rounded-xl shadow-sm border border-slate-100 md:text-right">
+                        <h4 class="font-bold text-slate-900 text-lg">Interview Coordination</h4>
+                        <p class="text-slate-500 text-sm mt-2">We manage the schedule, provide feedback, and ensure a smooth process for both candidate and client.</p>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-lg timeline-dot transform -translate-x-1/2 z-10"></div>
+                    <div class="md:w-5/12 order-3 md:order-3"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between w-full" data-aos="fade-up">
+                    <div class="md:w-5/12 order-2 md:order-1"></div>
+                    <div class="absolute left-4 md:left-1/2 w-8 h-8 bg-green-500 rounded-full border-4 border-white shadow-lg timeline-dot transform -translate-x-1/2 z-10"></div>
+                    <div class="md:w-5/12 order-2 md:order-3 bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-left border-l-4 border-green-500">
+                        <h4 class="font-bold text-slate-900 text-lg">Onboarding & Support</h4>
+                        <p class="text-slate-500 text-sm mt-2">We help with salary negotiation and stay in touch for 90 days post-hiring to ensure retention.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. INDUSTRIES WE SERVE (ICON GRID) -->
+    <section class="py-24 bg-slate-900 text-white">
+        <div class="container mx-auto px-6 lg:px-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Industries We Dominate</h2>
+                <p class="text-slate-400">Deep domain expertise across verticals.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="cpu" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Information Technology</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="factory" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Manufacturing</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="landmark" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Banking & Finance</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="heart-pulse" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Healthcare</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="shopping-bag" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Retail & E-commerce</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="book-open" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Education</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="plane" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Aviation & Logistics</h5>
+                </div>
+                <div class="p-6 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors text-center border border-slate-700 group">
+                    <i data-lucide="hotel" class="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h5 class="font-bold">Hospitality</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FAQ SECTION (ACCORDION) -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6 lg:px-10 max-w-4xl">
+            <h2 class="text-3xl font-bold text-slate-900 mb-10 text-center">Frequently Asked Questions</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden" x-data="{ open: false }">
+                    <button class="w-full flex justify-between items-center p-5 bg-slate-50 hover:bg-slate-100 transition-colors text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+                        <span class="font-bold text-slate-800">Do you charge candidates for placement?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="p-5 bg-white text-slate-600 hidden">
+                        Absolutely not. Our services are 100% free for job seekers. We are paid by the companies that hire you. We believe in ethical recruitment.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-5 bg-slate-50 hover:bg-slate-100 transition-colors text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+                        <span class="font-bold text-slate-800">What is the salary range for jobs you provide?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="p-5 bg-white text-slate-600 hidden">
+                        We cater to all levels. From entry-level blue-collar jobs starting at ₹10,000/month to senior executive roles offering ₹50 LPA+.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-5 bg-slate-50 hover:bg-slate-100 transition-colors text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+                        <span class="font-bold text-slate-800">Do you provide jobs for freshers?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="p-5 bg-white text-slate-600 hidden">
+                        Yes! We have a dedicated 'Campus to Corporate' wing that helps fresh graduates find internships and full-time roles in IT, Sales, and Operations.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. CTA BANNER -->
+    <section class="py-20 bg-blue-600">
+        <div class="container mx-auto px-6 text-center text-white">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Let's Build Your Future Together</h2>
+            <p class="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">Join the Kishvi network today. Whether you need a job or need to hire the best, we are just a click away.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/browse-jobs" class="bg-white text-blue-600 px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all">
+                    Search Jobs
+                </a>
+                <a href="/contact" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-blue-600 transition-all">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            duration: 800,
+            offset: 100
+        });
+        lucide.createIcons();
+    </script>
+</body>
+</html>    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Kishvi Consulting</title>
+
+    <!-- Bootstrap 5 CSS (Latest Stable Version) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --dark-bg: #0f172a;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8f9fa;
+            color: #334155;
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+        }
+
+        /* --- Mobile Optimization Utilities --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem !important; }
+            .section-padding { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+            .mobile-center { text-align: center !important; }
+            .mobile-margin-top { margin-top: 2rem; }
+        }
+
+        .section-padding { padding-top: 5rem; padding-bottom: 5rem; }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: #ffffff;
+            position: relative;
+        }
+        .hero-title {
+            font-weight: 800;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            color: #0f172a;
+        }
+
+        /* --- Floating Images for Desktop --- */
+        .img-stack-container { position: relative; height: 450px; }
+        .img-card {
+            position: absolute;
+            border-radius: 16px;
+            border: 4px solid #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+        .img-1 { top: 0; right: 0; width: 260px; height: 320px; z-index: 1; }
+        .img-2 { bottom: 20px; left: 20px; width: 280px; height: 240px; z-index: 2; }
+        
+        /* --- Contact Cards --- */
+        .contact-card {
+            background: white;
+            padding: 2.5rem 1.5rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(13, 110, 253, 0.1);
+            border-color: var(--primary-color);
+        }
+        .icon-circle {
+            width: 64px; height: 64px;
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        /* --- Form Styling --- */
+        .form-control, .form-select {
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+
+        /* --- Footer Specifics --- */
+        #footer-container {
+            background-color: var(--dark-bg);
+            color: #cbd5e1;
+        }
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: #fff; }
+        .social-btn {
+            width: 40px; height: 40px;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .social-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body id="main-body-container">
+
+    <!-- 1. NAVIGATION (Simplified for this file) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="#">
+                <span class="bg-primary text-white rounded p-1"><i class="bi bi-briefcase-fill"></i></span>
+                Kishvi Consulting
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto fw-medium">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/browse-jobs">Jobs</a></li>
+                    <li class="nav-item"><a class="nav-link active text-primary" href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero-section section-padding" id="contact-hero-container">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Text Content -->
+                <div class="col-lg-6 mb-5 mb-lg-0 mobile-center">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-light border mb-4">
+                        <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+                        <span class="small fw-bold text-secondary text-uppercase ls-1">We are Online</span>
+                    </div>
+                    
+                    <h1 class="hero-title mb-4">
+                        Let's Start a <br>
+                        <span class="text-primary">Conversation.</span>
+                    </h1>
+                    
+                    <p class="lead text-secondary mb-5">
+                        Whether you are a company looking for talent or a candidate looking for a future, <span class="fw-bold text-dark">Kishvi Consulting</span> is here to bridge the gap.
+                    </p>
+
+                    <!-- Mobile-Friendly Contact Button -->
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                        <div class="card border-0 shadow-sm p-3 rounded-4 d-flex flex-row align-items-center gap-3 bg-white">
+                            <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
+                                <i class="bi bi-telephone-fill fs-4"></i>
+                            </div>
+                            <div class="text-start">
+                                <div class="small text-uppercase fw-bold text-muted">Call Us Now</div>
+                                <a href="tel:9027293530" class="fs-5 fw-bold text-dark text-decoration-none">+91 9027293530</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images (Hidden on small mobile for cleaner look, shown on md+) -->
+                <div class="col-lg-6 d-none d-md-block">
+                    <div class="img-stack-container">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop" class="img-card img-1" alt="Team">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop" class="img-card img-2" alt="Meeting">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. CONTACT INFO GRID (Stacked on Mobile) -->
+    <section class="section-padding bg-white" id="contact-info-grid">
+        <div class="container">
+            <div class="row g-4">
+                
+                <!-- Card 1: Address -->
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <div class="icon-circle">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Visit HQ</h4>
+                        <p class="text-muted small mb-3">Our Main Office</p>
+                        <p class="fw-bold text-dark mb-0">
+                            06A, Tower 5,<br>
+                            Panchsheel Wellington,<br>
+                            Crossing Republik,<br>
+                            Ghaziabad, UP - 201016
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Email -->
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <div class="icon-circle">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Email Us</h4>
+                        <p class="text-muted small mb-3">Drop us a line anytime</p>
+                        <a href="mailto:Info@kishviconsulting.com" class="text-primary fw-bold text-decoration-none fs-5 text-break">
+                            Info@kishviconsulting.com
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Phone -->
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <div class="icon-circle">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Call Us</h4>
+                        <p class="text-muted small mb-3">Mon-Fri 9am - 6pm</p>
+                        <a href="tel:9027293530" class="fw-bold text-dark fs-4 text-decoration-none">
+                            +91 9027293530
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FORM & MISSION -->
+    <section class="section-padding" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                
+                <!-- Left: Text (Order 2 on mobile) -->
+                <div class="col-lg-6 order-2 order-lg-1">
+                    <h2 class="fw-bold display-6 mb-4">Why Connect With <br><span class="text-primary">Kishvi?</span></h2>
+                    <p class="text-secondary lead mb-4">
+                        We are not just processing resumes; we are building a legacy of employment.
+                    </p>
+                    
+                    <div class="d-flex mb-4">
+                        <div class="flex-shrink-0 bg-white shadow-sm p-3 rounded-circle text-primary fw-bold">01</div>
+                        <div class="ms-3">
+                            <h5 class="fw-bold mb-1">Immediate Response</h5>
+                            <p class="text-muted small">We aim to respond within 24 hours.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="flex-shrink-0 bg-white shadow-sm p-3 rounded-circle text-primary fw-bold">02</div>
+                        <div class="ms-3">
+                            <h5 class="fw-bold mb-1">Expert Guidance</h5>
+                            <p class="text-muted small">Free career counseling for candidates.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Form (Order 1 on mobile to be seen first) -->
+                <div class="col-lg-6 order-1 order-lg-2">
+                    <div class="bg-white p-4 p-md-5 rounded-4 shadow-lg">
+                        <h3 class="fw-bold mb-4">Send a Message</h3>
+                        <form>
+                            <div class="row g-3 mb-3">
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="First Name">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email Address">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select">
+                                    <option>Select Subject</option>
+                                    <option>Job Inquiry</option>
+                                    <option>Hiring Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <textarea class="form-control" rows="4" placeholder="Your Message..."></textarea>
+                            </div>
+                            <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold shadow">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. MAP -->
+    <section id="map-container" class="w-100 bg-light position-relative" style="height: 350px;">
+        <iframe src="https://maps.google.com/maps?q=Ghaziabad&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                width="100%" height="100%" style="border:0; filter: grayscale(100%);" allowfullscreen="" loading="lazy">
+        </iframe>
+        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3 bg-white px-4 py-2 rounded-pill shadow d-none d-md-block">
+            <p class="mb-0 fw-bold text-dark small"><i class="bi bi-geo-alt-fill text-danger"></i> Headquarters: Ghaziabad, UP</p>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER (Hardcoded Details to Fix Missing Info) -->
+    <footer id="footer-container" class="pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4 mb-5 mobile-center text-center text-md-start">
+
+                <!-- Brand -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3 text-white">
+                        <div class="bg-primary rounded p-1 me-2"><i class="bi bi-briefcase-fill"></i></div>
+                        <span class="fs-4 fw-bold">Kishvi Consulting</span>
+                    </div>
+                    <p class="small text-secondary mb-4">
+                        Connecting the world's best talent with top-tier companies. Your career, our priority.
+                    </p>
+                    <div class="d-flex gap-2 justify-content-center justify-content-md-start">
+                        <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-btn"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links (Hidden on very small screens if needed, but kept here) -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-bold text-white mb-3">Candidates</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2 small">
+                        <li><a href="#" class="footer-link">Browse Jobs</a></li>
+                        <li><a href="#" class="footer-link">Companies</a></li>
+                        <li><a href="#" class="footer-link">Career Advice</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-bold text-white mb-3">Employers</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-2 small">
+                        <li><a href="#" class="footer-link text-primary">Post a Job</a></li>
+                        <li><a href="#" class="footer-link">Candidates</a></li>
+                        <li><a href="#" class="footer-link">Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- CONTACT INFO IN FOOTER (CRITICAL UPDATE) -->
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="fw-bold text-white mb-3">Get in Touch</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-3">
+                        <!-- Address -->
+                        <li class="d-flex justify-content-center justify-content-md-start gap-2">
+                            <i class="bi bi-geo-alt-fill text-primary mt-1"></i>
+                            <span class="text-secondary text-start">
+                                06A, Tower 5, Panchsheel Wellington,<br>
+                                Crossing Republik, Ghaziabad,<br>
+                                Uttar Pradesh, PIN 201016
+                            </span>
+                        </li>
+                        <!-- Phone -->
+                        <li class="d-flex justify-content-center justify-content-md-start gap-2 align-items-center">
+                            <i class="bi bi-telephone-fill text-primary"></i>
+                            <a href="tel:9027293530" class="footer-link fw-bold">9027293530</a>
+                        </li>
+                        <!-- Email -->
+                        <li class="d-flex justify-content-center justify-content-md-start gap-2 align-items-center">
+                            <i class="bi bi-envelope-fill text-primary"></i>
+                            <a href="mailto:Info@kishviconsulting.com" class="footer-link">Info@kishviconsulting.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <hr class="border-secondary opacity-25">
+
+            <div class="row align-items-center small text-secondary text-center text-md-start">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    &copy; 2026 Kishvi Consulting. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-md-end">
+                    Powered by <a href="#" class="text-white text-decoration-none fw-bold">Systaio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html></body>
+</html>
+
